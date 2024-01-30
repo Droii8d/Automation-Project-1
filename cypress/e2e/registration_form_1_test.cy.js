@@ -143,7 +143,7 @@ describe('This is first test suite, Davis Jonass', () => {
         cy.get('#password_error_message').should('have.css', 'display', 'block')
     })
 
-    it.only('User cannot add letters to phone number', () => {
+    it('User cannot add letters to phone number', () => {
         cy.get('#username').type('jD')
         cy.get('#firstName').type('Davis')
         cy.get('#lastName').type('Jonass')
