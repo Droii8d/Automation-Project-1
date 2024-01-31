@@ -20,7 +20,6 @@ describe('This is first test suite', () => {
         cy.get('input[name="password"]').type('MyPass123')
         cy.get('input[name="confirm"]').type('MyPass123')
         // cy.get('[name="confirm"]').type('MyPass123')
-
         //in order to activate submit button, user has to click somewhere outside the input field
         cy.get('h2').contains('Password').click()
 
