@@ -140,7 +140,7 @@ describe('Section 2: Visual tests', () => {
         cy.get('input[type="radio"]').eq(0).should('not.be.checked')
     })
     
-    it('Check that check box list is correct', () => {
+    it('Check that check box list is correct and check boxes can be checked and unchecked', () => {
         cy.get('input[type="checkbox"]').should('have.length', 3)
 
         cy.get('input[type="checkbox"]').next().eq(0).should('have.text','I have a bike')
@@ -152,6 +152,18 @@ describe('Section 2: Visual tests', () => {
         cy.get(':checkbox').uncheck().should('not.be.checked')
 
     })
+
+    it('Animal dropdown is correct', () => {
+        cy.get('#animal').children().should('have.length', 6)
+        cy.get('#animal').find('option').eq(0).should('have.text', 'Dog')
+        cy.get('#animal').find('option').eq(1).should('have.text', 'Cat')
+        cy.get('#animal').find('option').eq(2).should('have.text', 'Snake')
+        cy.get('#animal').find('option').eq(3).should('have.text', 'Hippo')
+        cy.get('#animal').find('option').eq(4).should('have.text', 'Cow')
+        cy.get('#animal').find('option').eq(5).should('have.text', 'Horse')
+
+
+})
 
     it('Car dropdown is correct', () => {
         cy.get('#cars').select(1).screenshot('Cars drop-down')
