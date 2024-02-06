@@ -9,6 +9,7 @@ Assignement 4: add content to the following tests
 describe('Section 1: Functional tests', () => {
 
     it('User can use only same both first and validation passwords', ()=>{
+
         cy.get('#username').type('Marelius')
         cy.get('#email').type('marcus@rome.it')
         cy.get('input[name="name"]').type('Marcus')
