@@ -2,6 +2,7 @@ beforeEach(() => {
     cy.visit('cypress/fixtures/registration_form_3.html')
 })
 
+//Visual tests
 it('Check that radio button list is correct', () => {
     cy.get('input[type="radio"]').should('have.length', 4)
 
@@ -87,29 +88,68 @@ it('Email format validation', () => {
     cy.get('input[name="email').type('correct@email.com')
     cy.get('#emailAlert').should('not.be.visible')
 
+})
+
+//Functional tests
+it('User can submit form with all fields added', () => {
+    cy.get('#name').type('Lucius Annaeus Seneca')
+    cy.get('input[name="email"]').type('seneca@corduba.es')
+    cy.get('#country').select('Spain')
+    cy.get('#city').select('Madrid')
+    cy.contains('label', 'Date of registration').next().type('2024-02-07')
+    cy.get('input[type="radio"]').check('Daily')
+    cy.get('#birthday').type('1900-01-01')
+    cy.get(':checkbox').check().should('be.checked')
+    cy.get('input[type=file]').selectFile('testfile.txt')
+    cy.get('input[type="submit"]').should('not.be.disabled').click()
+    cy.get('h1').should('be.visible').and('contain.text', 'Submission received')
+})
+
+it('User can submit form with only mandatory fields filled/checked', () => {
+    inputMandatoryData('Seneca')
+    cy.get('input[type="submit"]').should('not.be.disabled').click()
+    cy.get('h1').should('be.visible').and('contain.text', 'Submission received')
+})
+
+it('User can`t submit form without providing email address', () => {
+    inputMandatoryData('Seneca')
+    cy.get('input[name="email"]').scrollIntoView()
+    cy.get('input[name="email"]').clear()
+    cy.get('#emailAlert').should('be.visible').and('contain.text', 'Email is required.')
+    cy.get('input[type="submit"]').should('be.disabled')
+})
+
+it('User can`t submit form without accepting privacy and cookie policy', () => {
+    inputMandatoryData('Seneca')
+    cy.get(':checkbox').uncheck().should('not.be.checked')
+    cy.get('input[type="submit"]').should('be.disabled')
+})
+
+it('User can`t submit form without selecting country', () => {
+    inputMandatoryData('Seneca')
+    cy.get('#country').select('')
+    cy.get('input[type="submit"]').should('be.disabled')
+})
+
+it('User can`t submit form without providing name', () => {
+    inputMandatoryData('Seneca')
+    cy.get('#name').scrollIntoView()
+    cy.get('#name').clear()
+    cy.get('input[type="submit"]').should('be.disabled')
+})
+
+it('User can upload and submit file', () => {
+    cy.get('input[type=file]').selectFile('testfile.txt')
+    cy.get('input[type=file]').siblings().should("have.text", "Submit file").click()
+    cy.get('h1').should('be.visible').and('contain.text', 'Submission received')
 
 })
-/*
-BONUS TASK: add visual tests for registration form 3
-Task list:
-* Create test suite for visual tests for registration form 3 (describe block)
-* Create tests to verify visual parts of the page:
-    * radio buttons and its content
-    * dropdown and dependencies between 2 dropdowns:
-        * list of cities changes depending on the choice of country
-        * if city is already chosen and country is updated, then city choice should be removed
-    * checkboxes, their content and links
-    * email format
- */
 
-
-/*
-BONUS TASK: add functional tests for registration form 3
-Task list:
-* Create second test suite for functional tests
-* Create tests to verify logic of the page:
-    * all fields are filled in + corresponding assertions
-    * only mandatory fields are filled in + corresponding assertions
-    * mandatory fields are absent + corresponding assertions (try using function)
-    * add file functionlity(google yourself for solution!)
- */
+function inputMandatoryData(name) {
+    cy.log('Name will be filled')
+    cy.get('#name').type(name)
+    cy.get('input[name="email"]').type('seneca@corduba.es')
+    cy.get('#country').select('Spain')
+    cy.get('#city').select('Madrid')
+    cy.get(':checkbox').check().should('be.checked')
+}
