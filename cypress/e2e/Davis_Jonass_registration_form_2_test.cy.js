@@ -21,7 +21,7 @@ describe('Section 1: Functional tests', () => {
         cy.get('h2').contains('Password').click() 
         cy.get('.submit_button').should('be.disabled')
         cy.get('#success_message').should('not.be.visible')
-        cy.get('#password_error_message').should('be.visible')
+        cy.get('#password_error_message').should('be.visible').should('contain.text', 'Passwords do not match!')
         
         cy.get('#confirm').scrollIntoView()
         cy.get('#confirm').clear()
@@ -43,7 +43,7 @@ describe('Section 1: Functional tests', () => {
 
         cy.get('.submit_button').should('not.be.disabled')
         cy.get('.submit_button').click()
-        cy.get('#success_message').should('be.visible')
+        cy.get('#success_message').should('be.visible').should('contain.text', 'User successfully submitted registration')
         
     })
 
@@ -51,7 +51,7 @@ describe('Section 1: Functional tests', () => {
         inputValidData('Marelious')
         cy.get('.submit_button').should('not.be.disabled')
         cy.get('.submit_button').click()
-        cy.get('#success_message').should('be.visible')
+        cy.get('#success_message').should('be.visible').should('contain.text', 'User successfully submitted registration')
 
     })
 
@@ -62,7 +62,7 @@ describe('Section 1: Functional tests', () => {
         cy.get('h2').contains('Password').click() 
         cy.get('.submit_button').should('be.disabled')
         cy.get('#success_message').should('not.be.visible')
-        cy.get('#input_error_message').should('be.visible')
+        cy.get('#input_error_message').should('be.visible').should('contain.text', 'Mandatory input field is not valid or empty!')
 
 })
 
@@ -75,7 +75,7 @@ describe('Section 1: Functional tests', () => {
         cy.get('h2').contains('Password').click() 
         cy.get('.submit_button').should('be.disabled')
         cy.get('#success_message').should('not.be.visible')
-        cy.get('#input_error_message').should('be.visible')
+        cy.get('#input_error_message').should('be.visible').should('contain.text', 'Mandatory input field is not valid or empty!')
 })
 
 

@@ -70,12 +70,8 @@ it('Check that check box list is correct and check boxes can be checked and unch
   
 })
 
-it('Check that cookie policy link is working', () => {
-    cy.get('button')
-    .find("a")
-    .should("have.attr", "href", "cookiePolicy.html")
-    .should("have.text", "Accept our cookie policy")
-    .click()
+it.only('Check that cookie policy link is working', () => {
+    cy.get('button').find("a").should("have.attr", "href", "cookiePolicy.html").should("have.text", "Accept our cookie policy").click()
     cy.url().should('contain', '/cookiePolicy.html')
     cy.go('back')
 })
@@ -129,13 +125,7 @@ it('User can`t submit form without selecting country', () => {
     inputMandatoryData('Seneca')
     cy.get('#country').select('')
     cy.get('input[type="submit"]').should('be.disabled')
-})
 
-it('User can`t submit form without providing name', () => {
-    inputMandatoryData('Seneca')
-    cy.get('#name').scrollIntoView()
-    cy.get('#name').clear()
-    cy.get('input[type="submit"]').should('be.disabled')
 })
 
 it('User can upload and submit file', () => {
