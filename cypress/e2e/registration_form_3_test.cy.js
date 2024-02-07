@@ -70,7 +70,7 @@ it('Check that check box list is correct and check boxes can be checked and unch
   
 })
 
-it.only('Check that cookie policy link is working', () => {
+it('Check that cookie policy link is working', () => {
     cy.get('button').find("a").should("have.attr", "href", "cookiePolicy.html").should("have.text", "Accept our cookie policy").click()
     cy.url().should('contain', '/cookiePolicy.html')
     cy.go('back')
